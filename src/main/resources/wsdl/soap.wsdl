@@ -1,0 +1,59 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://transportsystem.com/soap" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://transportsystem.com/soap" targetNamespace="http://transportsystem.com/soap">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://transportsystem.com/soap">
+            <xs:element name="GetPathDetailsRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="source" type="xs:string"/>
+                        <xs:element name="destination" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetPathDetailsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="PathDetails" type="tns:PathDetails"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="PathDetails">
+                <xs:sequence>
+                    <xs:element name="source" type="xs:string"/>
+                    <xs:element name="destination" type="xs:string"/>
+                    <xs:element name="path" type="xs:string"/>
+                    <xs:element name="distance" type="xs:double"/>
+                    <xs:element name="duration" type="xs:double"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="GetPathDetailsRequest">
+        <wsdl:part element="tns:GetPathDetailsRequest" name="GetPathDetailsRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetPathDetailsResponse">
+        <wsdl:part element="tns:GetPathDetailsResponse" name="GetPathDetailsResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="PathPort">
+        <wsdl:operation name="GetPathDetails">
+            <wsdl:input message="tns:GetPathDetailsRequest" name="GetPathDetailsRequest"> </wsdl:input>
+            <wsdl:output message="tns:GetPathDetailsResponse" name="GetPathDetailsResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PathPortSoap11" type="tns:PathPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetPathDetails">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="GetPathDetailsRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetPathDetailsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="PathPortService">
+        <wsdl:port binding="tns:PathPortSoap11" name="PathPortSoap11">
+            <soap:address location="http://localhost:8085/ws/paths"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

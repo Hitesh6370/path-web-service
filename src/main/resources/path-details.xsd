@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://transportsystem.com/soap"
+           xmlns:tns="http://transportsystem.com/soap" elementFormDefault="qualified">
+
+    <xs:element name="GetPathDetailsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name= "source" type="xs:string"/>
+                <xs:element name= "destination" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetPathDetailsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name= "PathDetails" type="tns:PathDetails"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="PathDetails">
+        <xs:sequence>
+            <xs:element name="source" type="xs:string"/>
+            <xs:element name="destination" type="xs:string"/>
+            <xs:element name="path" type="xs:string"/>
+            <xs:element name="distance" type="xs:double"/>
+            <xs:element name="duration" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

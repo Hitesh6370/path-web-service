@@ -1,6 +1,5 @@
 package com.transportsystem.pathwebservice.service;
 
-import com.transportsystem.pathwebservice.model.RouteDetails;
 import com.transportsystem.pathwebservice.model.*;
 import com.transportsystem.pathwebservice.restclient.DBRestClient;
 import com.transportsystem.pathwebservice.util.PathCalculator;
@@ -11,22 +10,31 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * The type Path service.
+ */
 @Service
 public class PathService {
+    private final DBRestClient client = new DBRestClient();
 
-    DBRestClient client = new DBRestClient();
-
-    public List<RouteDetails> routeDetails() {
+    private List<RouteDetails> routeDetails() {
         System.out.println("inside the service");
         return client.getRouteDetails();
     }
 
-    public PathDetails shortestPath(String s, String d) {
-        LinkedList<Vertex> path = new LinkedList<Vertex>();
+    /**
+     * Shortest path path details.
+     *
+     * @param s the s
+     * @param d the d
+     * @return the path details
+     */
+    public PathDetails shortestPath(final String s, final String d) {
+        LinkedList<Vertex> path = new LinkedList<>();
         List<Vertex> vertices = new ArrayList<>();
         List<Planet> planets = client.getPlanetList();
         for (Planet p : planets) {
-            Vertex v = new Vertex(p.getPlanet_node(), p.getPlanet_name());
+            Vertex v = new Vertex(p.getPlanetNode(), p.getPlanetName());
             vertices.add(v);
         }
 
@@ -36,14 +44,14 @@ public class PathService {
             Vertex source = null;
             Vertex destination = null;
             for (Vertex v : vertices) {
-                if (v.getId().equals(r.getPlanet_origin_id())) {
+                if (v.getId().equals(r.getPlanetOriginNode())) {
                     source = v;
                 }
-                if (v.getId().equals(r.getPlanet_destination_id())) {
+                if (v.getId().equals(r.getPlanetDestinationNode())) {
                     destination = v;
                 }
             }
-            Edge e = new Edge(r.getRoute_id(), source, destination, r.getDistance());
+            Edge e = new Edge(r.getRouteId(), source, destination, r.getDistance());
             edges.add(e);
         }
         Graph graph = new Graph(vertices, edges);
@@ -64,33 +72,31 @@ public class PathService {
         pathDetails.setSource(s);
         pathDetails.setDestination(d);
         pathDetails.setPath(path.toString());
-        ListIterator list_Iter = path.listIterator(0);
+        ListIterator listIterator = path.listIterator(0);
 
         List<RouteDetails> routeDetails = routeDetails();
         String prv = null;
         String nxt = null;
-        double distance = 0.0;
+        double duration = 0.0;
         double traffic = 0.0;
-        while (list_Iter.hasNext()) {
-
+        while (listIterator.hasNext()) {
             if (prv == null) {
-                prv = list_Iter.next().toString();
-                continue;
+                prv = listIterator.next().toString();
             }
-            nxt = list_Iter.next().toString();
-            if (prv != null && nxt != null) {
+            else {
+                nxt = listIterator.next().toString();
                 for (RouteDetails route : routeDetails) {
-                    if (route.getPlanet_origin_name().equals(prv) && route.getPlanet_destination_name().equals(nxt)) {
-                        distance = distance + route.getDistance();
-                        traffic = traffic + route.getTraffic_delay();
+                    if (route.getPlanetOriginName().equals(prv) && route.getPlanetDestinationName().equals(nxt)) {
+                        duration = duration + route.getDistance();
+                        traffic = traffic + route.getTrafficDelay();
                         break;
                     }
                 }
                 prv = nxt;
             }
         }
-        pathDetails.setDistance(distance);
-        pathDetails.setDuration(traffic);
+        pathDetails.setDuration(duration);
+        pathDetails.setDelay(traffic);
         return pathDetails;
     }
 }

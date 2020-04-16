@@ -8,7 +8,7 @@
 3.	clean build and run project.
 4.	Service will run @8085 port (Dearbedb-service should be up and running on port 8086 in order to get result).
 5.	this path web service is exposed as soap and rest both.  
-6.  use wisld file from resource folder or use 'http://localhost:8085/ws/soap.wsdl' to load on soap ui in order to test web service
+6.  use WSDL file from resource folder or use 'http://localhost:8085/ws/soap.wsdl' to load on soap ui in order to test web service
 7. same functionality can be test using postman in the form of rest api. 
 
 

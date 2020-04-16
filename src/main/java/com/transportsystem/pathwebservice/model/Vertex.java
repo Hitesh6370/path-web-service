@@ -2,12 +2,21 @@ package com.transportsystem.pathwebservice.model;
 
 import lombok.Data;
 
+/**
+ * The type Vertex.
+ */
 @Data
 public class Vertex {
 
     final private String id;
     final private String name;
 
+    /**
+     * Instantiates a new Vertex.
+     *
+     * @param id   the id
+     * @param name the name
+     */
     public Vertex(String id, String name) {
         this.id = id;
         this.name = name;
@@ -31,11 +40,8 @@ public class Vertex {
             return false;
         Vertex other = (Vertex) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 
     @Override

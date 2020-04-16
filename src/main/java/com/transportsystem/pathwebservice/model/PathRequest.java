@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * The type Path request.
+ */
 @Setter
 @Getter
 @AllArgsConstructor

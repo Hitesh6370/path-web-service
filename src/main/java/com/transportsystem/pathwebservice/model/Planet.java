@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * The type Planet.
+ */
 @Setter
 @Getter
 @AllArgsConstructor
@@ -12,6 +15,6 @@ import lombok.Setter;
 public class Planet {
 
     private int id;
-    private String planet_node;
-    private String planet_name;
+    private String planetNode;
+    private String planetName;
 }

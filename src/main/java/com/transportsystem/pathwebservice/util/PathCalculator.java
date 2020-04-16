@@ -5,25 +5,37 @@ import com.transportsystem.pathwebservice.model.Graph;
 import com.transportsystem.pathwebservice.model.Vertex;
 import java.util.*;
 
+/**
+ * The type Path calculator.
+ */
 public class PathCalculator {
 
-    private final List<Vertex> nodes;
     private final List<Edge> edges;
     private Set<Vertex> settledNodes;
     private Set<Vertex> unSettledNodes;
     private Map<Vertex, Vertex> predecessors;
     private Map<Vertex, Double> distance;
 
+    /**
+     * Instantiates a new Path calculator.
+     *
+     * @param graph the graph
+     */
     public PathCalculator(Graph graph) {
-        this.nodes = new ArrayList<Vertex>(graph.getVertexes());
-        this.edges = new ArrayList<Edge>(graph.getEdges());
+        //List<Vertex> nodes = new ArrayList<>(graph.getVertexes());
+        this.edges = new ArrayList<>(graph.getEdges());
     }
 
+    /**
+     * Execute.
+     *
+     * @param source the source
+     */
     public void execute(Vertex source) {
-        settledNodes = new HashSet<Vertex>();
-        unSettledNodes = new HashSet<Vertex>();
-        distance = new HashMap<Vertex, Double>();
-        predecessors = new HashMap<Vertex, Vertex>();
+        settledNodes = new HashSet<>();
+        unSettledNodes = new HashSet<>();
+        distance = new HashMap<>();
+        predecessors = new HashMap<>();
         distance.put(source, 0.0);
         unSettledNodes.add(source);
         while (unSettledNodes.size() > 0) {
@@ -59,7 +71,7 @@ public class PathCalculator {
     }
 
     private List<Vertex> getNeighbors(Vertex node) {
-        List<Vertex> neighbors = new ArrayList<Vertex>();
+        List<Vertex> neighbors = new ArrayList<>();
         for (Edge edge : edges) {
             if (edge.getSource().equals(node)
                     && !isSettled(edge.getDestination())) {
@@ -96,12 +108,18 @@ public class PathCalculator {
         }
     }
 
+    /**
+     * Gets path.
+     *
+     * @param target the target
+     * @return the path
+     */
     /*
      * This method returns the path from the source to the selected target and
      * NULL if no path exists
      */
     public LinkedList<Vertex> getPath(Vertex target) {
-        LinkedList<Vertex> path = new LinkedList<Vertex>();
+        LinkedList<Vertex> path = new LinkedList<>();
         Vertex step = target;
         // check if a path exists
         if (predecessors.get(step) == null) {

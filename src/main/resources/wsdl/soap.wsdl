@@ -1,6 +1,6 @@
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://transportsystem.com/soap" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://transportsystem.com/soap" targetNamespace="http://transportsystem.com/soap">
+<wsdl:definitions targetNamespace="http://transportsystem.com/soap">
     <wsdl:types>
-        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://transportsystem.com/soap">
+        <xs:schema elementFormDefault="qualified" targetNamespace="http://transportsystem.com/soap">
             <xs:element name="GetPathDetailsRequest">
                 <xs:complexType>
                     <xs:sequence>
@@ -21,8 +21,8 @@
                     <xs:element name="source" type="xs:string"/>
                     <xs:element name="destination" type="xs:string"/>
                     <xs:element name="path" type="xs:string"/>
-                    <xs:element name="distance" type="xs:double"/>
                     <xs:element name="duration" type="xs:double"/>
+                    <xs:element name="delay" type="xs:double"/>
                 </xs:sequence>
             </xs:complexType>
         </xs:schema>
@@ -39,7 +39,7 @@
             <wsdl:output message="tns:GetPathDetailsResponse" name="GetPathDetailsResponse"> </wsdl:output>
         </wsdl:operation>
     </wsdl:portType>
-    <wsdl:binding name="PathPortSoap11" type="tns:PathPort">
+    <wsdl:binding name="PathPortSoap" type="tns:PathPort">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
         <wsdl:operation name="GetPathDetails">
             <soap:operation soapAction=""/>
@@ -52,7 +52,7 @@
         </wsdl:operation>
     </wsdl:binding>
     <wsdl:service name="PathPortService">
-        <wsdl:port binding="tns:PathPortSoap11" name="PathPortSoap11">
+        <wsdl:port binding="tns:PathPortSoap" name="PathPortSoap">
             <soap:address location="http://localhost:8085/ws/paths"/>
         </wsdl:port>
     </wsdl:service>

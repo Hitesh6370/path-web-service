@@ -5,6 +5,7 @@ import com.transportsystem.pathwebservice.restclient.DBRestClient;
 import com.transportsystem.pathwebservice.util.PathCalculator;
 import com.transportsystem.soap.PathDetails;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -73,7 +74,6 @@ public class PathService {
         pathDetails.setDestination(d);
         pathDetails.setPath(path.toString());
         ListIterator listIterator = path.listIterator(0);
-
         List<RouteDetails> routeDetails = routeDetails();
         String prv = null;
         String nxt = null;

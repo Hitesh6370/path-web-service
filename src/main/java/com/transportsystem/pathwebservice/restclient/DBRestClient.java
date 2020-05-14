@@ -15,7 +15,7 @@ import java.util.List;
 public class DBRestClient {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String baseUrl = "https://app-gateway.herokuapp.com/api";
+    private final String baseUrl = "https://derbydb-service.herokuapp.com/api";
 
     /**
      * Gets route details.
